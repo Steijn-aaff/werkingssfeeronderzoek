@@ -101,3 +101,11 @@ input[type="text"]:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rg
 #output table { border-collapse: collapse; }
 #output td, #output th { border: 1px solid var(--border); padding: 6px 10px; }
 #output th { background: rgba(78, 38, 128, .06); color: var(--purple); }
+
+.download {
+  margin-bottom: 14px; padding: 8px 18px; border: 1.5px solid var(--purple); border-radius: 999px; background: var(--white);
+  color: var(--purple); font: inherit; font-weight: 500; cursor: pointer; transition: all .15s;
+}
+.download:hover:not(:disabled) { background: rgba(78, 38, 128, .06); }
+.download:disabled { opacity: .5; cursor: wait; }
+

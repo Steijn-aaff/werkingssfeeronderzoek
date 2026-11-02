@@ -5,8 +5,8 @@ Instructies voor de agent:
 - Behoud alle koppen en hun nummering exact. Vul alleen de tekst onder elke kop in.
 - Verwijder de HTML-commentaren (<!-- ... -->) uit het uiteindelijke rapport.
 - Vervang {{bedrijfsnaam}} door de naam van het onderzochte bedrijf.
+- Als er geen expliciete bron is voor het uitzoeken van een CAO of Bedrijfspensioenfoends, kun je de meest waarschijnlijke optie meegeven. Geef hierbij wel aan in de tekst (niet in het kopje) dat er geen expliciete bron is die dit vermeldt.
 - Verzin geen feiten. Noem bij elke bevinding de bron (bijv. de website-URL).
-- Is een bron niet beschikbaar of niet gekoppeld, schrijf dan onder de kop: "Niet beschikbaar: <reden>".
 - Schrijf zakelijk en in het Nederlands.
 -->
 
@@ -61,7 +61,7 @@ Overige geraadpleegde bronnen, bijvoorbeeld:
 - informatie uit Easy
 - bplpensioen.nl
 - pensioenfondsrecreatie.nl/verplichtstelling
-Als er nuttige informatie uit een bron komt, geef dan de bevindingen + bron aan.
+Als er nuttige informatie uit een bron komt, geef dan de bevindingen + bron aan. Als er geen informatie uit de bron komt, hoeft deze niet benoemd te worden.
 -->
 
 ### 2.5 Sectorindeling
@@ -78,4 +78,7 @@ Als er nuttige informatie uit een bron komt, geef dan de bevindingen + bron aan.
 
 ### 2.8 Conclusie
 
-<!-- Korte conclusie: sector, toepasselijke cao en bedrijfstakpensioenfonds, met de belangrijkste onderbouwing. Wijs op onzekerheden of ontbrekende bronnen. -->
+<!--
+Een tabel met 3 kolommen: Onderdeel, bevinding en zekerheid (1-3). 3 Rijen: Sector, Cao, Pensioenfonds. Geef bij bevinding het resultaat aan voor dat onderdeel (de gevonden cao, pensioenfonds en sector). Geef bij zekerheid een score aan tussen 1 en 3 waarbij 3 zeker is obv expliciete bronnen en 1 is gebaseerd op alleen impliciete bewijzen en "giswerk".
+Korte conclusie: sector, toepasselijke cao en bedrijfstakpensioenfonds, met de belangrijkste onderbouwing. Wijs op onzekerheden of ontbrekende bronnen. 
+-->

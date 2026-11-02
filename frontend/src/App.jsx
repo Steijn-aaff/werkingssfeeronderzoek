@@ -5,6 +5,11 @@ import { findCompanies } from "./companies.js";
 
 const NEW_CUSTOMER = "Nieuwe klant";
 
+// dd-mm-yyyy (slashes are not allowed in file names)
+function today() {
+  return new Date().toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit", year: "numeric" }).replaceAll("/", "-");
+}
+
 export default function App() {
   const [query, setQuery] = useState("");
   const [company, setCompany] = useState(null); // the chosen company, null until picked from the list
@@ -16,7 +21,7 @@ export default function App() {
   const [userInput, setUserInput] = useState(""); // extra info for the agent, sent along as user_input
   const [editingInput, setEditingInput] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [answer, setAnswer] = useState(null); // { searches, text, error }
+  const [answer, setAnswer] = useState(null); // { searches, text, error, company }
 
   const matches = company ? [] : findCompanies(query);
   // The dropdown always ends with "Nieuwe klant" for companies that aren't in the list
@@ -77,7 +82,7 @@ export default function App() {
 
     let searches = [];
     let text = "";
-    const update = (extra = {}) => setAnswer({ searches: [...searches], text, error: null, ...extra });
+    const update = (extra = {}) => setAnswer({ searches: [...searches], text, error: null, company: name, ...extra });
 
     setLoading(true);
     update();
@@ -114,6 +119,27 @@ export default function App() {
       update({ error: "Kan de server niet bereiken." });
     } finally {
       setLoading(false);
+    }
+  }
+
+  // The server turns the report markdown into a text-based PDF, which is saved straight away
+  async function downloadPdf() {
+    const company = answer.company.replace(/[\\/:*?"<>|]/g, "").trim();
+    try {
+      const res = await fetch("/api/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markdown: answer.text }),
+      });
+      if (!res.ok) throw new Error();
+      const url = URL.createObjectURL(await res.blob());
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `werkingssfeeronderzoek_${company}_${today()}.pdf`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      setAnswer((a) => ({ ...a, error: "De PDF kon niet worden gemaakt." }));
     }
   }
 
@@ -284,6 +310,11 @@ export default function App() {
                   </span>
                 ))}
               </div>
+            )}
+            {answer.text && !answer.error && (
+              <button type="button" className="download" disabled={loading} onClick={downloadPdf}>
+                Download PDF
+              </button>
             )}
             <div id="output">
               {answer.error ? (

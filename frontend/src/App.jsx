@@ -13,6 +13,8 @@ export default function App() {
   const [active, setActive] = useState(0);
   const [webSearch, setWebSearch] = useState(true);
   const [kvk, setKvk] = useState(false); // mockup only
+  const [userInput, setUserInput] = useState(""); // extra info for the agent, sent along as user_input
+  const [editingInput, setEditingInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState(null); // { searches, text, error }
 
@@ -84,7 +86,7 @@ export default function App() {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ company: name, website: webSearch, kvk }),
+        body: JSON.stringify({ company: name, website: webSearch, kvk, user_input: userInput.trim() }),
       });
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -175,6 +177,11 @@ export default function App() {
                 ))}
               </ul>
             )}
+            {!name && (
+              <div className="hint">
+                {isNew ? "Vul de naam van de nieuwe klant in" : "Kies een bedrijf uit de lijst"}
+              </div>
+            )}
             {isNew && (
               <button type="button" className="back" onClick={backToList}>
                 &larr; Kies een bestaande klant
@@ -182,31 +189,84 @@ export default function App() {
             )}
           </div>
           <div className="actions">
-            <div className="sources">
-              <button
-                type="button"
-                className="toggle"
-                aria-pressed={webSearch}
-                onClick={() => setWebSearch((on) => !on)}
-              >
-                <span className="switch" /> Website
-              </button>
-              {/* Mockup: not connected to the backend yet */}
-              <button
-                type="button"
-                className="toggle"
-                aria-pressed={kvk}
-                onClick={() => setKvk((on) => !on)}
-              >
-                <span className="switch" /> KVK
-              </button>
+            <div className="actions-left">
+              <div className="sources">
+                <button
+                  type="button"
+                  className="toggle"
+                  aria-pressed={webSearch}
+                  onClick={() => setWebSearch((on) => !on)}
+                >
+                  <span className="switch" /> Website
+                </button>
+                {/* Mockup: not connected to the backend yet */}
+                <button
+                  type="button"
+                  className="toggle"
+                  aria-pressed={kvk}
+                  onClick={() => setKvk((on) => !on)}
+                >
+                  <span className="switch" /> KVK
+                </button>
+              </div>
+              <div className="extra">
+                {editingInput ? (
+                  // The value is already in state while typing, so leaving the field is all it takes to keep it
+                  <div className="extra-edit">
+                    <input
+                      type="text"
+                      autoFocus
+                      autoComplete="off"
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      onBlur={() => setEditingInput(false)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === "Escape") {
+                          e.preventDefault(); // Enter would otherwise submit the form
+                          e.currentTarget.blur();
+                        }
+                      }}
+                      placeholder="Extra informatie voor het onderzoek"
+                    />
+                    <button
+                      type="button"
+                      className="confirm"
+                      aria-label="Bewaar extra informatie"
+                      onMouseDown={(e) => {
+                        e.preventDefault(); // keep focus until we close, same effect as clicking outside
+                        setEditingInput(false);
+                      }}
+                    >
+                      &rarr;
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="toggle extra-btn"
+                      aria-pressed={!!userInput}
+                      title={userInput || undefined}
+                      onClick={() => setEditingInput(true)}
+                    >
+                      <span className="extra-label">Extra informatie</span>
+                    </button>
+                    {userInput && (
+                      <button
+                        type="button"
+                        className="clear"
+                        aria-label="Wis extra informatie"
+                        title="Wis"
+                        onClick={() => setUserInput("")}
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
             <div className="actions-right">
-              {!name && (
-                <span className="hint">
-                  {isNew ? "Vul de naam van de nieuwe klant in" : "Kies een bedrijf uit de lijst"}
-                </span>
-              )}
               <button type="submit" className="send" disabled={loading || !name}>
                 Begin onderzoek &rarr;
               </button>

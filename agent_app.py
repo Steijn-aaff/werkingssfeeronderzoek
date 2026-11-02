@@ -18,7 +18,12 @@ async def api_ask(request: Request):
     async def events():
         # One JSON object per line, so the page can show searches and text as they arrive
         try:
-            async for kind, value in ask(body["company"], bool(body.get("website")), bool(body.get("kvk"))):
+            async for kind, value in ask(
+                body["company"], 
+                body.get("user_input", ""),
+                bool(body.get("website")), 
+                bool(body.get("kvk")),
+                ):
                 yield json.dumps({"type": kind, "value": value}) + "\n"
         except Exception as e:
             yield json.dumps({"type": "error", "value": str(e)}) + "\n"

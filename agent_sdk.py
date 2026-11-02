@@ -1,31 +1,24 @@
 # Agent SDK: async stream of messages from an agent loop, with optional web search as a tool
 from claude_agent_sdk import query, ClaudeAgentOptions, AssistantMessage, TextBlock, ToolUseBlock
-from pathlib import Path
+from prompts.prompt import SYSTEM_PROMPT
 
+def build_prompt(company, user_input): #params only
+    prompt = ( 
+        f"Bedrijf: {company}\n"
+        f"Extra informatie: {user_input}\n"
+        f"Kvk: de KvK-bron is nog niet gekoppeld"
+    )
+    return prompt
 
-TEMPLATE_NAME = "werkingssfeeronderzoek_small.md"
-TEMPLATE = (Path(__file__).parent / "templates" / TEMPLATE_NAME).read_text(encoding="utf-8")
-
-SYSTEM_PROMPT = (
-    "Je stelt een werkingssfeeronderzoek op voor een bedrijf. "
-    "Vul onderstaande template in en geef als antwoord alleen het ingevulde rapport in Markdown. "
-    "Volg de instructies in de commentaren van de template. "
-    "Verzin geen feiten en noem per bevinding de bron. "
-    "Is een bron uitgeschakeld of niet beschikbaar, schrijf dan 'Niet beschikbaar: <reden>' onder de betreffende kop.\n\n"
-    "TEMPLATE:\n" + TEMPLATE)
-
-async def ask(company, website=True, kvk=False):
+async def ask(company, user_input, website=True, kvk=False):
 
     options = ClaudeAgentOptions(
         system_prompt=SYSTEM_PROMPT,
         tools=["WebSearch"] if website else [],
         allowed_tools=["WebSearch"] if website else [],
-        max_turns= 5 if website else 1, 
+        max_turns= 5 if website else 1
     )
-    prompt = (
-        f"Bedrijf: {company}\n"
-        "(de KvK-bron is nog niet gekoppeld, dus sectie 2.1 kun je niet invullen)."
-    )
+    prompt = build_prompt(company, user_input)
 
     async for msg in query(prompt=prompt, options=options):
         if isinstance(msg, AssistantMessage):

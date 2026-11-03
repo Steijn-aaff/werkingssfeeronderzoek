@@ -9,18 +9,18 @@ from starlette.responses import JSONResponse, Response, StreamingResponse
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
-from agent_sdk import ask
+from agent_sdk import run_case
 from misc.pdf_report import markdown_to_pdf
 
 DIST = Path(__file__).parent / "frontend" / "dist"
 
-async def api_ask(request: Request):
+async def api_run_case(request: Request):
     body = await request.json()
 
     async def events():
         # One JSON object per line, so the page can show searches and text as they arrive
         try:
-            async for kind, value in ask(
+            async for kind, value in run_case(
                 body["company"], 
                 body.get("user_input", ""),
                 bool(body.get("website")), 
@@ -47,7 +47,7 @@ if not (DIST / "index.html").exists():
     raise SystemExit("Frontend not built. Run: cd frontend && npm install && npm run build")
 
 app = Starlette(routes=[
-    Route("/api/ask", api_ask, methods=["POST"]),
+    Route("/api/run_case", api_run_case, methods=["POST"]),
     Route("/api/pdf", api_pdf, methods=["POST"]),
     # Built React app
     Mount("/", StaticFiles(directory=DIST, html=True)),

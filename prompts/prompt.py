@@ -1,6 +1,6 @@
 from pathlib import Path
 
-TEMPLATE_NAME = "werkingssfeeronderzoek.md"
+TEMPLATE_NAME = "werkingssfeeronderzoek_small.md"
 TEMPLATE = (Path(__file__).parent.parent / "templates" / TEMPLATE_NAME).read_text(encoding="utf-8")
 
 GENERATOR_SYSTEM_PROMPT = (

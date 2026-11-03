@@ -88,7 +88,7 @@ export default function App() {
     update();
 
     try {
-      const res = await fetch("/api/ask", {
+      const res = await fetch("/api/run_case", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ company: name, website: webSearch, kvk, user_input: userInput.trim() }),

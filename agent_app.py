@@ -10,7 +10,7 @@ from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
 from agent_sdk import ask
-from pdf_report import markdown_to_pdf
+from misc.pdf_report import markdown_to_pdf
 
 DIST = Path(__file__).parent / "frontend" / "dist"
 

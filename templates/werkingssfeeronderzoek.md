@@ -7,7 +7,8 @@ Instructies voor de agent:
 - Vervang {{bedrijfsnaam}} door de naam van het onderzochte bedrijf.
 - Als er geen expliciete bron is voor het uitzoeken van een CAO of Bedrijfspensioenfoends, kun je de meest waarschijnlijke optie meegeven. Geef hierbij wel aan in de tekst (niet in het kopje) dat er geen expliciete bron is die dit vermeldt.
 - Verzin geen feiten. Noem bij elke bevinding de bron (bijv. de website-URL).
-- Schrijf zakelijk en in het Nederlands.
+- Schrijf zakelijk en in het Nederlands. 
+- Houdt het beknopt, maximaal 5 A4 is de richtlijn.
 -->
 
 # Werkingssfeeronderzoek {{bedrijfsnaam}}

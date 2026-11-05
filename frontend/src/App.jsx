@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { findCompanies } from "./companies.js";
@@ -21,7 +21,8 @@ export default function App() {
   const [userInput, setUserInput] = useState(""); // extra info for the agent, sent along as user_input
   const [editingInput, setEditingInput] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [answer, setAnswer] = useState(null); // { searches, text, error, company }
+  const [answer, setAnswer] = useState(null); // { searches, writing, text, error, company }
+  const abortRef = useRef(null); // aborts the running research when the user cancels
 
   const matches = company ? [] : findCompanies(query);
   // The dropdown always ends with "Nieuwe klant" for companies that aren't in the list
@@ -81,9 +82,12 @@ export default function App() {
     if (!name || loading) return;
 
     let searches = [];
+    let writing = false; // research is done, the report agent is writing
     let text = "";
-    const update = (extra = {}) => setAnswer({ searches: [...searches], text, error: null, company: name, ...extra });
+    const update = (extra = {}) => setAnswer({ searches: [...searches], writing, text, error: null, company: name, ...extra });
 
+    const controller = new AbortController();
+    abortRef.current = controller;
     setLoading(true);
     update();
 
@@ -92,6 +96,7 @@ export default function App() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ company: name, website: webSearch, kvk, user_input: userInput.trim() }),
+        signal: controller.signal,
       });
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -107,6 +112,9 @@ export default function App() {
           if (event.type === "search") {
             searches.push(event.value);
             update();
+          } else if (event.type === "research") {
+            writing = true;
+            update();
           } else if (event.type === "text") {
             text += (text ? "\n\n" : "") + event.value;
             update();
@@ -116,10 +124,16 @@ export default function App() {
         }
       }
     } catch {
-      update({ error: "Kan de server niet bereiken." });
+      update({ error: controller.signal.aborted ? "Onderzoek geannuleerd." : "Kan de server niet bereiken." });
     } finally {
+      abortRef.current = null;
       setLoading(false);
     }
+  }
+
+  // Closing the request also stops the agent on the server
+  function cancel() {
+    abortRef.current?.abort();
   }
 
   // The server turns the report markdown into a text-based PDF, which is saved straight away
@@ -293,24 +307,40 @@ export default function App() {
               </div>
             </div>
             <div className="actions-right">
-              <button type="submit" className="send" disabled={loading || !name}>
-                Begin onderzoek &rarr;
-              </button>
+              {loading ? (
+                <button type="button" className="cancel" onClick={cancel}>
+                  Annuleer onderzoek
+                </button>
+              ) : (
+                <button type="submit" className="send" disabled={!name}>
+                  Begin onderzoek &rarr;
+                </button>
+              )}
             </div>
           </div>
         </form>
 
         {answer && (
           <section className="answer">
-            {answer.searches.length > 0 && (
-              <div className="searches">
-                {answer.searches.map((s, i) => (
-                  <span className="chip" key={i}>
-                    Zoekt: {s}
+            {answer.searches.length > 0 &&
+              (loading && !answer.writing ? (
+                // Carousel: only the latest search is visible, each new one slides in over the previous
+                <div className="ticker" aria-live="polite">
+                  <span className="pulse" />
+                  <span className="ticker-item" key={answer.searches.length}>
+                    Zoekt: {answer.searches.at(-1)}
                   </span>
-                ))}
-              </div>
-            )}
+                </div>
+              ) : (
+                <details className="searches">
+                  <summary>{answer.searches.length} zoekacties uitgevoerd</summary>
+                  <ul>
+                    {answer.searches.map((s, i) => (
+                      <li key={i}>{s}</li>
+                    ))}
+                  </ul>
+                </details>
+              ))}
             {answer.text && !answer.error && (
               <button type="button" className="download" disabled={loading} onClick={downloadPdf}>
                 Download PDF
@@ -322,7 +352,7 @@ export default function App() {
               ) : answer.text ? (
                 <Markdown remarkPlugins={[remarkGfm]}>{answer.text}</Markdown>
               ) : (
-                <p className="status">Bezig met nadenken…</p>
+                <p className="status">{answer.writing ? "Rapport wordt geschreven…" : "Onderzoek gestart…"}</p>
               )}
             </div>
           </section>

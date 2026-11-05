@@ -79,6 +79,9 @@ Als er nuttige informatie uit een bron komt, geef dan de bevindingen + bron aan.
 ### 2.8 Conclusie
 
 <!--
+
 Een tabel met 3 kolommen: Onderdeel, bevinding en zekerheid (1-3). 3 Rijen: Sector, Cao, Pensioenfonds. Geef bij bevinding het resultaat aan voor dat onderdeel (de gevonden cao, pensioenfonds en sector). Geef bij zekerheid een score aan tussen 1 en 3 waarbij 3 zeker is obv expliciete bronnen en 1 is gebaseerd op alleen impliciete bewijzen en "giswerk".
-Korte conclusie: sector, toepasselijke cao en bedrijfstakpensioenfonds, met de belangrijkste onderbouwing. Wijs op onzekerheden of ontbrekende bronnen. 
+Korte conclusie: sector, toepasselijke cao en bedrijfstakpensioenfonds, met de belangrijkste onderbouwing. Geef een korte samenvatting van onzekerheden of ontbrekende bronnen in max 5 punten met max 2 zinnen per punt. 
+
+Voeg hier ook altijd een kleine disclaimer van max. 2 zinnen rondom reliability en liability van het onderzoek en de uitvoerder.
 -->

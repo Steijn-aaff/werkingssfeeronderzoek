@@ -52,7 +52,8 @@ Regels:
 
 <!--
 Bevindingen uit het KvK-register die relevant zijn voor de werkingssfeer: handelsnaam, KvK-nummer, rechtsvorm, SBI-codes (hoofd- en nevenactiviteiten) en het aantal werkzame personen. Gebruik een compacte tabel. Overige KvK-gegevens, zoals vestigingen of verbonden entiteiten, neem je alleen op als ze echt relevant zijn voor het onderzoek.
-Bron KvK is nog niet gekoppeld: schrijf "Niet beschikbaar: KvK-bron niet gekoppeld" tenzij gegevens zijn aangeleverd.
+Bron KvK is nog niet gekoppeld: schrijf "Niet beschikbaar: KvK-bron niet gekoppeld" tenzij gegevens zijn aangeleverd of in het dossier via het internet zijn gevonden.
+Als de KvK-optie aan stond maar de bron niet is gekoppeld, zijn handelsnaam, KvK-nummer, rechtsvorm, SBI-codes en aantal werkzame personen via het internet opgezocht (eerst companyinfo.nl, daarna andere relevante websites). Neem de gevonden gegevens uit het dossier op in de tabel en vermeld bij de bronnen de websites waar ze vandaan komen (niet "KvK-register"). Geef in deze sectie duidelijk aan dat de gegevens via het internet zijn gevonden en niet rechtstreeks uit het KvK-register komen. Ontbrekende informatie die relevant is voor de KvK-gegevens (bijv. geen SBI-codes of aantal werkzame personen gevonden) benoem je expliciet in deze sectie.
 -->
 
 ### 2.2 Website
@@ -85,7 +86,9 @@ Als er informatie uit een bron komt die relevant is voor sector, cao of pensioen
 
 ### 2.6 CAO-werkingssfeer
 
-<!-- Onder welke cao valt het bedrijf? Onderbouw op basis van de werkingssfeer van de cao en de bevindingen hierboven. -->
+<!-- Onder welke cao valt het bedrijf? Onderbouw op basis van de werkingssfeer van de cao en de bevindingen hierboven.
+Voor het bepalen van de cao is als eerste fnv.nl geraadpleegd; daarna mogen ook andere relevante bronnen zijn gebruikt. Geef aan dat fnv.nl is geraadpleegd, wat daar is gevonden en welke andere bronnen zijn gebruikt, en neem de gebruikte fnv.nl-pagina op in de bronnenlijst. Als het dossier geen fnv.nl-informatie bevat, benoem dat dan als ontbrekende bron. -->
+
 
 ### 2.7 Bedrijfstakpensioenfonds
 

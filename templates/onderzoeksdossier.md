@@ -17,7 +17,10 @@ Instructies voor de agent:
 
 ## KvK-gegevens
 
-<!-- Handelsnaam, KvK-nummer, rechtsvorm, SBI-codes (hoofd- en nevenactiviteiten), aantal werkzame personen. Anders: "Niet beschikbaar: KvK-bron niet gekoppeld". -->
+<!-- Handelsnaam, KvK-nummer, rechtsvorm, SBI-codes (hoofd- en nevenactiviteiten), aantal werkzame personen.
+Als de KvK-optie uit staat en er geen gegevens zijn aangeleverd: "Niet beschikbaar: KvK-bron niet gekoppeld".
+Als de KvK-optie aan staat maar de KvK-bron niet is gekoppeld (je krijgt geen echte KvK-gegevens): zoek deze gegevens via het internet. Raadpleeg eerst companyinfo.nl en kijk welke informatie daar te vinden is. Bekijk daarna zo nodig andere relevante websites. Controleer dat het om dit bedrijf gaat (naam, plaats, KvK-nummer). Vermeld per gegeven de bron en dat het via het internet is gevonden en niet rechtstreeks uit het KvK-register komt. Benoem duidelijk welke KvK-gegevens ontbreken of niet te verifiëren waren (bijv. "SBI-codes: niet gevonden"). -->
+
 
 ## Activiteiten
 
@@ -33,7 +36,8 @@ Instructies voor de agent:
 
 ## Mogelijke cao's en pensioenfondsen
 
-<!-- Per kandidaat: naam, wat de werkingssfeer zegt (met bron) en welke feiten uit dit dossier ervoor of ertegen pleiten. -->
+<!-- Per kandidaat: naam, wat de werkingssfeer zegt (met bron) en welke feiten uit dit dossier ervoor of ertegen pleiten.
+Raadpleeg voor de cao-kandidaten als eerste fnv.nl (bijv. de cao-pagina's en werkingssfeerbepalingen) om te bepalen welke cao mogelijk van toepassing is. Daarna mag je ook andere relevante bronnen gebruiken (bijv. de cao-tekst zelf of de website van de cao-partijen). Noem de gebruikte fnv.nl-pagina als bron. Kon je fnv.nl niet raadplegen of vond je daar niets bruikbaars, vermeld dat dan onder "Niet gevonden / open vragen". -->
 
 ## Niet gevonden / open vragen
 

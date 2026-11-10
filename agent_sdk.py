@@ -7,12 +7,18 @@ from prompts.prompt import RESEARCH_PROMPT, SYSTEM_PROMPT
 
 RESEARCH_DIR = Path(__file__).parent / "research"
 
-def build_research_prompt(company, user_input, kvk): #params only
+def build_research_prompt(company, user_input, kvk, website=True): #params only
     prompt = (
         f"Bedrijf: {company}\n"
         f"Extra informatie van de gebruiker: {user_input or 'geen'}\n"
-        f"KvK-gegevens: {kvk}"
+        + (
+            "KvK-optie: aan, maar de KvK-bron is niet gekoppeld. Zoek handelsnaam, KvK-nummer, rechtsvorm, SBI-codes en aantal werkzame personen via het internet (eerst companyinfo.nl)."
+            if kvk else
+            "KvK-optie: uit, geen KvK-gegevens aangeleverd."
+        )
     )
+    if not website:
+        prompt += "\nZoek alleen naar KvK-gegevens; doorzoek niet de bedrijfswebsite of cao's/pensioenfondsen."
     return prompt
 
 def save_research(company, dossier):
@@ -33,15 +39,18 @@ async def finish_dossier(session_id):
 
 async def research(company, user_input, website, kvk):
 
+    # KvK-bron is nog niet gekoppeld: als de KvK-optie aan staat zoekt de agent de KvK-gegevens via het internet
+    can_search = bool(website or kvk)
     options = ClaudeAgentOptions(
         system_prompt=RESEARCH_PROMPT,
-        tools=["WebSearch", "WebFetch"] if website else [],
-        allowed_tools=["WebSearch", "WebFetch"] if website else [],
-        max_turns=12 if website else 1,
+        tools=["WebSearch", "WebFetch"] if can_search else [],
+        allowed_tools=["WebSearch", "WebFetch"] if can_search else [],
+        max_turns=12 if can_search else 1,
     )
-    prompt = build_research_prompt(company, user_input, kvk)
+    prompt = build_research_prompt(company, user_input, kvk, website)
 
     try:
+        
         async for msg in query(prompt=prompt, options=options):
             if isinstance(msg, AssistantMessage):
                 for block in msg.content:

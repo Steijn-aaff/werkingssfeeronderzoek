@@ -1,15 +1,15 @@
 // Temporary list; replace with a KvK lookup or database query later
 export const COMPANIES = [
-  "FrieslandCampina",
-  "Vion Food Group",
-  "Cosun",
-  "Avebe",
-  "Agrifirm",
-  "ForFarmers",
-  "Nutreco",
-  "Rijk Zwaan",
-  "Enza Zaden",
-  "Bejo Zaden",
+  "Broekhuis Beheer B.V.",
+  "Aardappelgroothandel Jansen-Dongen B.V.",
+  "Strandcamping Groede BV",
+  "PotatoNext B.V.",
+  "Transcom WorldWide B.V.",
+  "Van Wijngaarden Shipping Group B.V.",
+  "Porcus Elitus B.V.",
+  "vanRijsingengreen B.V.",
+  "SMST Designers en Constructors B.V.",
+  "Koeltechnisch Buro De Laat B.V.",
 ];
 
 const normalize = (s) =>

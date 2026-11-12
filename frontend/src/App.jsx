@@ -194,7 +194,7 @@ export default function App() {
               placeholder={
                 isNew
                   ? "Typ de naam van de nieuwe klant"
-                  : "Typ een bedrijfsnaam, bijvoorbeeld FrieslandCampina"
+                  : "Typ een bedrijfsnaam, bijvoorbeeld aaff B.V."
               }
             />
             {open && options.length > 0 && (
